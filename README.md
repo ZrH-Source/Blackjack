@@ -1,2 +1,2 @@
-BlackJack  
-Version 0.1
+Blackjack
+Version 1.0
