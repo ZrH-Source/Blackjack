@@ -7,9 +7,10 @@
   </head>
   <body>
     <h1> BlackJack </h1>
+    <p id="test"></p>
     <p>
       <table>
-        <tr>
+        <tr>  
           <td> </td>
           <td>C1</td>
           <td>C2</td>
@@ -17,18 +18,89 @@
         </tr>
         <tr>
           <td>Main du croupier</td>
-          <td>12</td>
-          <td>XX</td>
-          <td>12</td>
+          <td id="croupier_c1"></td>
+          <td id="croupier_c2">XX</td>
+          <td id="croupier_c3">XX</td>
         </tr>
          <tr>
            <td>Votre main</td>
-           <td>12</td>
-           <td>12</td>
-           <td>12</td>
+           <td id="user_c1"></td>
+           <td id="user_c2"></td>
+           <td id="user_c3"></td>
          </tr>
+        </tr>
+        <tr>
+          <td>Total User</td>
+          <td id="total_user"></td>
+        </tr>
+        <tr>
+          <td>Total Croupier</td>
+          <td id="total_croupier"></td>
+        </tr>
       </table>
-      <button name="BTRetry"> Relancer </button> <button name="BTFinish"> Terminer </button>
+      <button onclick="relanceTable()">Relancer</button> 
+      <button onclick="generateTable()">Générer</button>
+      <button onclick="standCard()">Stand</button>
     </p>
     <p> Résultat : Vous perdez / vous gagnez</p>
+    <button onclick="resetCard()">Reset</button>
+    <button onclick="setTimeout(finish(), 2000)">Terminer</button>
 </html>
+
+<script type="text/javascript">
+  function generateCard(){
+    return (Math.random()*9+1).toFixed();
+  }
+  const croupier_c1 = generateCard();
+  const croupier_c2 = generateCard();
+  const user_c1 = generateCard();
+  const user_c2 = generateCard();
+  var total_user = parseInt(user_c1) + parseInt(user_c2);
+  var total_croupier = parseInt(croupier_c1);
+
+  setText('croupier_c1', croupier_c1);
+  setText('user_c1', user_c1);
+  setText('user_c2', user_c2);
+  setText('total_user', total_user);
+  setText('total_croupier', total_croupier);
+  
+  function setText(selector, value){
+    document.getElementById(selector).innerText = value;
+  }
+
+  function generateTable(){
+    document.getElementById('croupier_c1').innerText = generateCard();
+    document.getElementById('user_c1').innerText = generateCard();
+    document.getElementById('user_c2').innerText = generateCard();
+    document.getElementById('total_user').innerText = parseInt(user_c1) + parseInt(user_c2);
+    document.getElementById('total_croupier').innerText = parseInt(croupier_c1);
+  }
+
+  function resetCard(){
+    document.getElementById('croupier_c1').innerText = "";
+    document.getElementById('user_c1').innerText = "";
+    document.getElementById('user_c2').innerText = ""
+    document.getElementById('user_c3').innerText = "";
+    document.getElementById('total_user').innerText = "";
+    document.getElementById('total_croupier').innerText = "";
+    
+  }
+
+  function relanceTable() {
+    const user_c3 = generateCard();
+    document.getElementById('user_c3').innerText = user_c3;
+    total_user += parseInt(user_c3)
+    document.getElementById('total_user').innerText = total_user;
+    
+    if(total_user >= 21){
+      alert("Vous avez dépassé 21");
+      resetCard()
+    }
+  }
+
+  function finish(){
+    alert("Merci d'avoir joué à notre jeu. Vous allez être redirigé sur google dans 2 seconds.")
+    document.location.href="https://google.com";
+  }
+
+</script>
